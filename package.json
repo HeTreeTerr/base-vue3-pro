@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "element-plus": "^2.4.4",
+    "unplugin-element-plus": "^0.8.0",
     "vue": "^3.3.8"
   },
   "devDependencies": {
