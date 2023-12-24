@@ -1,8 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
-//初始化页面，注掉
-//import HelloWorld from './components/HelloWorld.vue'
 </script>
+
 <!-- 项目初始化生成内容注掉 -->
 <!-- <template>
   <div>
@@ -16,11 +15,9 @@ import { RouterView } from 'vue-router'
   <HelloWorld msg="Vite + Vue" />
 </template> -->
 
-<!-- 路由试图引入 -->
+<!-- 路由视图 -->
 <template>
   <RouterView />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
