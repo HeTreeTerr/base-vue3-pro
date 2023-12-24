@@ -73,7 +73,7 @@ export default {
                     },
                 ]
             },
-        ]
+        ];
         
         //无子集
         const noChildren = ()=>{

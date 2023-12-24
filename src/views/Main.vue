@@ -35,4 +35,14 @@ export default defineComponent({
 .r-container {
   flex-wrap: wrap;
 }
+.common-layout {
+  height: 100%;
+  & > .el-container {
+    height: 100%;
+    & > .el-aside {
+      height: 100%;
+      background: #545c64;
+    }
+  }
+}
 </style>

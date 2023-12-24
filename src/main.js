@@ -5,6 +5,8 @@ import App from './App.vue'
 import router from './router'
 //引入图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+//less引入（全局样式优化）
+import './assets/less/index.less'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
