@@ -1,12 +1,14 @@
 <!-- 项目主页 -->
 <template>
-    <!-- 左侧菜单 -->
-    <div>左侧菜单</div>
-    <!-- 顶部 -->
-    <div>头部</div>
-    <!-- 主题变化部分 -->
-    <div>
-        这个部分是变化的
-        <RouterView />
+    <div class="common-layout">
+      <el-container>
+        <el-header>Header</el-header>
+        <el-container>
+          <el-aside width="200px">Aside</el-aside>
+          <el-main>
+            <RouterView />
+          </el-main>
+        </el-container>
+      </el-container>
     </div>
-</template>
+  </template>

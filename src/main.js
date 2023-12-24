@@ -1,6 +1,7 @@
 //默认写法
 import { createApp } from 'vue'
-import './style.css'
+//创建项目时生成的样式，注掉
+//import './style.css'
 import App from './App.vue'
 //引入自定义路由
 import router from './router'
