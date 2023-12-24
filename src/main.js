@@ -2,8 +2,12 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+//引入自定义路由
+import router from './router'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
 
 /*
 1）element-plus 全部引入
