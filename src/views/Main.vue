@@ -1,10 +1,10 @@
 <!-- 项目主页 -->
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container class="lay-container">
       <!-- 左侧菜单 -->
       <el-aside width="200px">Aside</el-aside>
-      <el-container>
+      <el-container class="r-container">
         <!-- 引入头部 -->
         <CommonHeader />
         <!-- 主体可变部分 -->
@@ -28,3 +28,9 @@ export default defineComponent({
 },
 })
 </script>
+
+<style lang="less" scoped>
+.r-container {
+  flex-wrap: wrap;
+}
+</style>
