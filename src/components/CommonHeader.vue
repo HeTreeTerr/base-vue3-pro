@@ -20,7 +20,10 @@
     <div class="r-content">
       <el-dropdown>
       <span class="el-dropdown-link">
-        <img class="userImg" src="../assets/user.jpg" alt="" />
+        <!-- img固定写法 -->
+        <!-- <img class="userImg" src="../assets/image/user.jpg" alt="" /> -->
+        <!-- img灵活写法 -->
+        <img class="userImg" :src="getImgSrc('user')" alt="" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -34,6 +37,21 @@
 </template>
 
 <script>
+export default {
+  setup() {
+    const getImgSrc = (user)=>{
+      //console.log(user);
+      //console.log(import.meta.url);
+      //console.log(new URL(`../assets/image/${user}.jpg`, import.meta.url));
+      return new URL(`../assets/image/${user}.jpg`, import.meta.url).href;
+    };
+
+    return {
+      getImgSrc,
+    };
+  }
+  
+}
 </script>
 
 <style lang="less" scoped>
