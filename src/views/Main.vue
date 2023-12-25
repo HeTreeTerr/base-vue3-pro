@@ -32,8 +32,9 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.r-container {
+.el-container {
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .common-layout {
   height: 100%;
