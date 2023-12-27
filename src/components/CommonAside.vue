@@ -7,25 +7,17 @@
         text-color="#fff"
         :collapse="false"
         >
-        <!-- 无子集菜单 -->
-        <el-menu-item 
-        :index="item.path"
-        v-for="item in noChildren()"
-        :key="item.path">
-          <component class="icons" :is="item.icon"></component>
-          <span>{{item.lable}}</span>
-        </el-menu-item>
-        <!-- 有子集菜单 -->
+        <!-- 一级目录处理 -->
         <el-sub-menu 
         :index="item.path"
-        v-for="item in hasChildren()"
+        v-for="item in menuListData()"
         :key="item.path">
           <template #title>
             <component class="icons" :is="item.icon"></component>
             <span>{{item.lable}}</span>
           </template>
           <!-- 二级菜单处理 -->
-          <el-menu-item-group>
+          <el-menu-item-group v-if="item.children && item.children.length > 0">
             <el-menu-item 
             :index="subItem.path"
             v-for="(subItem,subIndex) in item.children"
@@ -75,19 +67,25 @@ export default {
             },
         ];
         
-        //无子集
+        //无子集（方法）
         const noChildren = ()=>{
             return list.filter((item)=> !item.children);
         }
 
-        //有子集
+        //有子集（方法）
         const hasChildren = ()=>{
             return list.filter((item)=> item.children);
+        }
+
+        //菜单数据（方法）
+        const menuListData = ()=>{
+            return list;
         }
 
         return {
             noChildren,
             hasChildren,
+            menuListData,
         }
     }
 }
