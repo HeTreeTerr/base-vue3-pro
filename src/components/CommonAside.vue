@@ -1,11 +1,12 @@
 <!-- 左侧菜单组件 -->
 <template>
-    <el-aside width="200px">
+    <el-aside :width="$store.state.isCollapse ? '180px':'64px'">
         <el-menu 
         class="el-menu-vertical-demo"
         background-color="#545c64"
         text-color="#fff"
-        :collapse="false"
+        :collapse="!$store.state.isCollapse"
+        :collapse-transition="false"
         >
         <!-- 一级目录处理 -->
         <el-sub-menu 
@@ -68,14 +69,14 @@ export default {
         ];
         
         //无子集（方法）
-        const noChildren = ()=>{
+        /*const noChildren = ()=>{
             return list.filter((item)=> !item.children);
-        }
+        }*/
 
         //有子集（方法）
-        const hasChildren = ()=>{
+        /*const hasChildren = ()=>{
             return list.filter((item)=> item.children);
-        }
+        }*/
 
         //菜单数据（方法）
         const menuListData = ()=>{
@@ -83,8 +84,8 @@ export default {
         }
 
         return {
-            noChildren,
-            hasChildren,
+            // noChildren,
+            // hasChildren,
             menuListData,
         }
     }

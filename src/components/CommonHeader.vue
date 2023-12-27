@@ -13,7 +13,7 @@
       <!-- 3)图标集合方式展示图标 -->
       <!-- <el-icon><Plus /></el-icon> -->
       <!-- 4)结合button展示图标 -->
-      <el-button size="small">
+      <el-button size="small" @click="handleCollapse">
         <el-icon :size="20"><Menu /></el-icon>
       </el-button>
       <h3>首页</h3>
@@ -38,21 +38,30 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue-demi'
+import { useStore } from 'vuex'
+import store from '../store';
+export default defineComponent ({
   setup() {
+    //获取图片地址
     const getImgSrc = (user)=>{
       //console.log(user);
       //console.log(import.meta.url);
       //console.log(new URL(`../assets/image/${user}.jpg`, import.meta.url));
       return new URL(`../assets/image/${user}.jpg`, import.meta.url).href;
     };
-
+    //菜单目录折叠
+    let handleCollapse = ()=>{
+      //调用vuex中的mutations
+      //store.commit('updateIsCollapse','param===>123456');
+      store.commit('updateIsCollapse');
+    };
     return {
       getImgSrc,
+      handleCollapse,
     };
   }
-  
-}
+})
 </script>
 
 <style lang="less" scoped>

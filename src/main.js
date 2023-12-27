@@ -7,12 +7,17 @@ import router from './router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //less引入（全局样式优化）
 import './assets/less/index.less'
+import store from './store/index.js'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
+//链式写法
+//app.use(router).use(store)
+//等价写法
 app.use(router)
+app.use(store)
 app.mount('#app')
 
 /*
