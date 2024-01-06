@@ -8,11 +8,15 @@
         :collapse="!$store.state.isCollapse"
         :collapse-transition="false"
         >
+        <!-- 系统名称 -->
+        <h3 v-show="$store.state.isCollapse">后台管理</h3>
+        <h3 v-show="!$store.state.isCollapse">后台</h3>
         <!-- 一级目录处理 -->
         <el-sub-menu 
         :index="item.path"
         v-for="item in menuListData()"
-        :key="item.path">
+        :key="item.path"
+        @click="clickMenu(item)">
           <template #title>
             <component class="icons" :is="item.icon"></component>
             <span>{{item.lable}}</span>
@@ -22,7 +26,8 @@
             <el-menu-item 
             :index="subItem.path"
             v-for="(subItem,subIndex) in item.children"
-            :key="subIndex">
+            :key="subIndex"
+            @click="clickMenu(subItem)">
                 <component class="icons" :is="subItem.icon"></component>
                 <span>{{subItem.lable}}</span>
             </el-menu-item>
@@ -33,6 +38,7 @@
 </template>
 
 <script>
+import {useRouter} from 'vue-router'
 export default {
     setup() {
         //菜单数据
@@ -81,12 +87,32 @@ export default {
         //菜单数据（方法）
         const menuListData = ()=>{
             return list;
-        }
+        };
+        
+        //路由实现跳转
+        const router = useRouter();
+        const clickMenu = (item)=>{
+            //当前菜单无子集时，代表是最底层，提供跳转
+            if(item.children == undefined 
+            || item.children == null 
+            || item.children.length == 0){
+                router.push({
+                    name : item.name,
+                });
+            }
+            //否则是目录，不进行跳转
+            else{
+                router.push({
+                    name : router.currentRoute.value.name,
+                });
+            }
+        };
 
         return {
             // noChildren,
             // hasChildren,
             menuListData,
+            clickMenu,
         }
     }
 }
@@ -99,5 +125,10 @@ export default {
 }
 .el-menu {
     border-right: none;
+    h3{
+        line-height: 48px;
+        color: #fff;
+        text-align: center;
+    }
 }
 </style>
