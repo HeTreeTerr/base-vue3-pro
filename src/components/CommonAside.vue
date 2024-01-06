@@ -89,21 +89,26 @@ export default {
             return list;
         };
         
-        //路由实现跳转
+        //拿到路由对象
         const router = useRouter();
+        router.beforeEach((to,from)=>{
+            // 若路由为空，则取消跳转
+            if (to.path === '') return false;
+        })
+        //菜单跳转方法
         const clickMenu = (item)=>{
             //当前菜单无子集时，代表是最底层，提供跳转
             if(item.children == undefined 
             || item.children == null 
             || item.children.length == 0){
                 router.push({
-                    name : item.name,
+                    path : item.path,
                 });
             }
             //否则是目录，不进行跳转
             else{
                 router.push({
-                    name : router.currentRoute.value.name,
+                    path : router.currentRoute.value.path,
                 });
             }
         };
