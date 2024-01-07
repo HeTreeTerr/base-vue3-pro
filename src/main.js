@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //less引入（全局样式优化）
 import './assets/less/index.less'
 import store from './store/index.js'
+import './api/mock.js'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

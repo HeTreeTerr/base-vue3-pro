@@ -34,43 +34,13 @@
 </template>
 
 <script>
-import {defineComponent} from "vue"
+import {defineComponent,onMounted,ref} from "vue"
+import axios from "axios"
 
 export default defineComponent({
     setup(){
         //表数据
-        const tableData = [
-            {
-                name:"oppo",
-                todayBuy: 500,
-                monthBuy: 3500,
-                totalBuy: 22000,
-            },
-            {
-                name:"vivo",
-                todayBuy: 300,
-                monthBuy: 2200,
-                totalBuy: 24000,
-            },
-            {
-                name:"苹果",
-                todayBuy: 300,
-                monthBuy: 2200,
-                totalBuy: 24000,
-            },
-            {
-                name:"小米",
-                todayBuy: 300,
-                monthBuy: 2200,
-                totalBuy: 24000,
-            },
-            {
-                name:"三星",
-                todayBuy: 300,
-                monthBuy: 2200,
-                totalBuy: 24000,
-            },
-        ];
+        let tableData = ref([]);
         //列名
         const tableLabel = {
             name:"品牌",
@@ -78,6 +48,19 @@ export default defineComponent({
             monthBuy: "本月购买",
             totalBuy: "总购买",
         };
+        //axios发送ajax
+        const getTableList = async ()=>{
+            await axios.get("/home/getData").then((res)=>{
+                console.log(res);
+                if(res.data.code == 200){
+                    tableData.value = res.data.data.tableData;
+                }
+            });
+        };
+        //调用ajax
+        onMounted(()=>{
+            getTableList();
+        });
         return{
             tableData,
             tableLabel,
