@@ -36,7 +36,8 @@ export default {
                         totalBuy: 24000,
                     }
                 ]
-            }
+            },
+            //msg: "success",
         }
     }
 }

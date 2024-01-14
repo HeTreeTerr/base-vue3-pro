@@ -34,11 +34,12 @@
 </template>
 
 <script>
-import {defineComponent,onMounted,ref} from "vue"
+import {defineComponent,getCurrentInstance,onMounted,ref} from "vue"
 import axios from "axios"
 
 export default defineComponent({
     setup(){
+        const {proxy} = getCurrentInstance();
         //表数据
         let tableData = ref([]);
         //列名
@@ -50,12 +51,17 @@ export default defineComponent({
         };
         //axios发送ajax
         const getTableList = async ()=>{
-            await axios.get("/home/getData").then((res)=>{
+            //axios 原生写法
+            /*await axios.get("/home/getData").then((res)=>{
                 console.log(res);
                 if(res.data.code == 200){
                     tableData.value = res.data.data.tableData;
                 }
-            });
+            });*/
+            //axios 二次封装
+            let res = await proxy.$api.getTableDate();
+            console.log(res);
+            tableData.value = res.tableData;
         };
         //调用ajax
         onMounted(()=>{
