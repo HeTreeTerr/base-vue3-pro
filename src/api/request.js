@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '../config'
-import {ElMessage} from 'element-plus'
+//import {ElMessage} from 'element-plus'
 
 const NETEORK_ERROR = '网络请求异常，请稍后重试...';
 
@@ -24,6 +24,7 @@ service.interceptors.response.use((res)=>{
         return data
     }else{
         //网络请求错误
+        //@ts-ignore
         ElMessage.error(msg || NETEORK_ERROR)
         return Promise.reject(msg || NETEORK_ERROR)
     }
