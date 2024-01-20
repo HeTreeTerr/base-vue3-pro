@@ -6,7 +6,16 @@ export default{
     //home组件 左侧表格数据获取
     getTableDate(params){
         return request({
-            url: '/home/getData',
+            url: '/home/getTableData',
+            mothod: 'get',
+            data: params,
+            //mock: true
+        })
+    },
+    //home组件 右上侧统计获取
+    getCountData(params){
+        return request({
+            url: '/home/getCountData',
             mothod: 'get',
             data: params,
             //mock: true

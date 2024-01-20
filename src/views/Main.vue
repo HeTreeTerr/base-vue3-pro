@@ -37,6 +37,9 @@ export default defineComponent({
   align-items: flex-start;
 }
 .common-layout {
+  .lay-container{
+    flex-wrap: nowrap;
+  }
   height: 100%;
   & > .el-container {
     height: 100%;

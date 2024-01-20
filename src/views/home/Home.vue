@@ -29,6 +29,21 @@
             </el-card>
         </el-col>
         <el-col :span="16" style="margin-top: 20px;">
+            <div class="num">
+                <el-card 
+                :body-style="{display: 'flex',padding: 0}"
+                v-for="item in countData"
+                :key="item.name">
+                    <component class="icons" 
+                    :is="item.icon" 
+                    :style="{background: item.color}">
+                    </component>
+                    <div class="details">
+                        <p class="num">¥{{item.value}}</p>
+                        <p class="txt">{{item.name}}</p>
+                    </div>
+                </el-card>
+            </div>
         </el-col>
     </el-row>
 </template>
@@ -42,6 +57,8 @@ export default defineComponent({
         const {proxy} = getCurrentInstance();
         //表数据
         let tableData = ref([]);
+        //统计数据
+        let countData = ref([]);
         //列名
         const tableLabel = {
             name:"品牌",
@@ -61,15 +78,26 @@ export default defineComponent({
             //axios 二次封装
             let res = await proxy.$api.getTableDate();
             console.log(res);
-            tableData.value = res.tableData;
+            tableData.value = res;
+        };
+        //axios发送ajax
+        const getCountList = async ()=>{
+            //axios 二次封装
+            let res = await proxy.$api.getCountData();
+            console.log(res);
+            countData.value = res;
         };
         //调用ajax
         onMounted(()=>{
+            //获取table数据
             getTableList();
+            //获取count数据
+            getCountList();
         });
         return{
             tableData,
             tableLabel,
+            countData,
         };
     }
 });
@@ -100,6 +128,38 @@ export default defineComponent({
             color: #666;
             margin-left: 60px;
         }
+    }
+}
+.num{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .el-card{
+        width: 32%;
+        margin-bottom: 20px;
+    }
+    .icons{
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+        text-align: center;
+        line-height: 80px;
+        color: #fff;
+    }
+    .details{
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .num{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    .txt{
+        font-size: 14px;
+        text-align: center;
+        color: #999;
     }
 }
 </style>
