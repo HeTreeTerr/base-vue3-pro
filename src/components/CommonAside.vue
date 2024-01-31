@@ -39,6 +39,7 @@
 
 <script>
 import {useRouter} from 'vue-router'
+import { useStore } from 'vuex';
 export default {
     setup() {
         //菜单数据
@@ -91,12 +92,20 @@ export default {
         
         //拿到路由对象
         const router = useRouter();
+        //仓库/存储处
+        const store = useStore();
         
         //菜单跳转方法
         const clickMenu = (item)=>{
-            router.push({
-                path : item.path,
-            });
+            if(item.children && item.children.length > 0){
+                return;
+            }else{
+                router.push({
+                    path : item.path,
+                });
+                //vuex 来管理
+                store.commit("selectMenu", item);
+            }
         };
 
         return {
