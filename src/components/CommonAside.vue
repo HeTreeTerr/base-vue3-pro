@@ -19,7 +19,7 @@
         @click="clickMenu(item)">
           <template #title>
             <component class="icons" :is="item.icon"></component>
-            <span>{{item.lable}}</span>
+            <span>{{item.label}}</span>
           </template>
           <!-- 二级菜单处理 -->
           <el-menu-item-group v-if="item.children && item.children.length > 0">
@@ -29,7 +29,7 @@
             :key="subIndex"
             @click="clickMenu(subItem)">
                 <component class="icons" :is="subItem.icon"></component>
-                <span>{{subItem.lable}}</span>
+                <span>{{subItem.label}}</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
@@ -47,27 +47,27 @@ export default {
             {
                 path: "/user",
                 name: "user",
-                lable: "用户管理",
+                label: "用户管理",
                 icon: "user",
                 url: "UserManage/UserManage"
             },
             {
                 path: "",
                 name: "other",
-                lable: "其他",
+                label: "其他",
                 icon: "location",
                 children:[
                     {
                         path: "/page1",
                         name: "page1",
-                        lable: "页面1",
+                        label: "页面1",
                         icon: "setting",
                         url: "Other/PageOne"
                     },
                     {
                         path: "/page2",
                         name: "page2",
-                        lable: "页面2",
+                        label: "页面2",
                         icon: "setting",
                         url: "Other/PageTwo"
                     },

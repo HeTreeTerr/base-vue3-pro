@@ -21,7 +21,7 @@
         <!-- 首页是一定存在的，所以直接写死 -->
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="current.path" v-if="current">
-          {{current.lable}}
+          {{current.label}}
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>

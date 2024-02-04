@@ -7,6 +7,8 @@
       <el-container class="r-container">
         <!-- 引入头部 -->
         <CommonHeader />
+        <!-- tab -->
+        <CommonTab />
         <!-- 主体可变部分 -->
         <el-main>
           <RouterView />
@@ -20,12 +22,14 @@
 import { defineComponent } from 'vue'
 import CommonHeader from '../components/CommonHeader.vue'
 import CommonAside from '../components/CommonAside.vue'
+import CommonTab from '../components/CommonTab.vue'
 import { RouterView } from 'vue-router';
 
 export default defineComponent({
   components:{
     CommonHeader,
     CommonAside,
+    CommonTab,
     RouterView,
 },
 })
