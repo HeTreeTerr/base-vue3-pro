@@ -7,28 +7,46 @@
         :closable="tag.name != 'home'"
         :disable-transitions="false"
         :effect="$route.name == tag.name ? 'dark' : 'plain'"
-        @click="changeMenu(tag)">
+        @click="changeMenu(tag)"
+        @close="handleClose(tag,index)">
         {{ tag.label }}
         </el-tag>
     </div>
 </template>
 
 <script>
-import {useRouter} from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 import { useStore } from 'vuex';
 export default {
     setup() {
         const store = useStore();
-        const route = useRouter();
+        const router = useRouter();
+        const route = useRoute();
         //获取公共的标签页数据
         const tags = store.state.tabsList;
         //标签页切换
-        const changeMenu=(item)=>{
-            route.push({name : item.name});
-        }
+        const changeMenu = (item)=>{
+            router.push({name : item.name});
+        };
+        //关闭tab
+        const handleClose = (tag,index)=>{
+            let length = tags.length - 1;
+            //处理vuex中的tabslist
+            store.commit("closeTab",tag);
+            //做第一个判断
+            if(tag.name != route.name){
+                return;
+            }
+            if(index == length){
+                router.push({name : tags[index - 1].name});
+            }else{
+                router.push({name : tags[index].name});
+            }
+        };
         return {
             tags,
             changeMenu,
+            handleClose,
         }
     }
 }
