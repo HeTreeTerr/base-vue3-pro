@@ -20,5 +20,15 @@ export default{
             data: params,
             //mock: true
         })
-    }
+    },
+
+    //获取用户列表数据
+    getUserData(params){
+        return request({
+            url: '/user/getUser',
+            mothod: 'get',
+            data: params,
+            //mock: true
+        })
+    },
 }
