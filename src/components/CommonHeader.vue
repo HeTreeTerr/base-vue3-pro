@@ -103,7 +103,11 @@ header {
     color: #fff;
   }
 }
-.bread /deep/ span{
+/*.bread /deep/ span{
+  color: #fff !important;
+  cursor: pointer !important;
+}*/
+:deep(.bread span){
   color: #fff !important;
   cursor: pointer !important;
 }

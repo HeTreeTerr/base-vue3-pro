@@ -10,7 +10,7 @@
         <!-- tab -->
         <CommonTab />
         <!-- 主体可变部分 -->
-        <el-main>
+        <el-main class="right-main">
           <RouterView />
         </el-main>
       </el-container>
@@ -39,10 +39,14 @@ export default defineComponent({
 .el-container {
   flex-wrap: wrap;
   align-items: flex-start;
+  height: 100%;
 }
 .common-layout {
   .lay-container{
     flex-wrap: nowrap;
+    .right-main{
+      height: calc(100% - 124px) !important;
+    }
   }
   height: 100%;
   & > .el-container {

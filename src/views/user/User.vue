@@ -12,13 +12,22 @@
             
             <el-table-column fixed="right" label="操作" width="180">
             <template #default>
-                <el-button size="small" @click="handleClick"
+                <el-button size="small"
                 >编辑</el-button
                 >
                 <el-button type="danger" size="small">删除</el-button>
             </template>
             </el-table-column>
         </el-table>
+        <!-- 分页部分 -->
+        <el-pagination
+            small
+            background
+            layout="prev, pager, next"
+            :total="config.total"
+            @current-change="changePage"
+            class="pager mt-4"
+        />
     </div>
 </template>
 
@@ -57,20 +66,48 @@ export default defineComponent({
         ]);
         //发送请求，获取用户列表数据
         onMounted(() =>{
-            getUserData();
+            getUserData(config);
         });
-        const getUserData = async () => {
-            let res = await proxy.$api.getUserData();
+        //分页配置信息
+        const config = reactive({
+            total: 0,
+            page: 1,
+            limit: 10,
+        });
+
+        const getUserData = async (config) => {
+            let res = await proxy.$api.getUserData(config);
             //console.log(res);
+            config.total = res.count;
             list.value = res.list.map((item) => {
                 item.sexLabel = item.sex === 0 ? '女' : '男';
                 return item;
             });
         };
+        //分页切换方法
+        const changePage = (page)=>{
+            //console.log(page);
+            config.page = page;
+            getUserData(config);
+        };
         return {
             list,
             tableLabel,
+            config,
+            changePage,
         }
     },
 })
 </script>
+
+<style lang="less" scoped>
+.table{
+    position: relative;
+    height: 520px;
+    .pager{
+        position: absolute;
+        right: 0;
+        bottom: -20px;
+    }
+}
+</style>
