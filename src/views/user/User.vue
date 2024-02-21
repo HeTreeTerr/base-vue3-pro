@@ -1,5 +1,18 @@
 <!-- user组件 -->
 <template>
+    <div class="user-header">
+        <!-- 新增按钮 -->
+        <el-button type="primary">+新增</el-button>
+        <!-- 用户搜索 -->
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="请输入">
+                <el-input v-model="formInline.keyword" placeholder="请输入用户名" clearable />
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="handleSearch">搜索</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
     <div class="table">
         <el-table :data="list" style="width: 100%; height: 500px;">
             <el-table-column 
@@ -72,6 +85,7 @@ export default defineComponent({
         const config = reactive({
             total: 0,
             page: 1,
+            name: '',
             limit: 10,
         });
 
@@ -90,11 +104,22 @@ export default defineComponent({
             config.page = page;
             getUserData(config);
         };
+        //用户搜索表单
+        const formInline = reactive({
+            keyword: "",
+        });
+        //用户搜索方法
+        const handleSearch = ()=>{
+            config.name = formInline.keyword;
+            getUserData(config);
+        };
         return {
             list,
             tableLabel,
             config,
             changePage,
+            formInline,
+            handleSearch,
         }
     },
 })
@@ -109,5 +134,9 @@ export default defineComponent({
         right: 0;
         bottom: -20px;
     }
+}
+.user-header{
+    display: flex;
+    justify-content: space-between;
 }
 </style>
