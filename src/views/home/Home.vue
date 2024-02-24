@@ -46,16 +46,16 @@
             </div>
             <!-- 折线图表 -->
             <el-card style="height: 280px;">
-                <div ref="echart" style="height: 280px;"></div>
+                <div ref="echart" style="height: 280px;" />
             </el-card>
             <div class="graph">
                 <!-- 柱状图表 -->
                 <el-card style="height: 260px;">
-                    <div ref="userechart" style="height: 240px;"></div>
+                    <div ref="userechart" style="height: 240px;" />
                 </el-card>
                 <!-- 饼形图表 -->
                 <el-card style="height: 260px;">
-                    <div ref="videoechart" style="height: 240px;"></div>
+                    <div ref="videoechart" style="height: 240px;" />
                 </el-card>
             </div>
         </el-col>
@@ -166,6 +166,7 @@ export default defineComponent({
 
         });
 
+        //图表数据对象
         let orderData = reactive({
             xData: [],
             series: [],
@@ -221,6 +222,7 @@ export default defineComponent({
             ];
             xOptions.xAxis.data = userData.xData;
             xOptions.series = userData.series;
+
             let uEcharts = echarts.init(proxy.$refs["userechart"])
             uEcharts.setOption(xOptions)
 
@@ -231,8 +233,8 @@ export default defineComponent({
                     type: "pie"
                 },
             ];
-            pieOptions.series = videoData.series
-            let vEcharts = echarts.init(proxy.$refs["videoechart"])
+            pieOptions.series = videoData.series;
+            let vEcharts = echarts.init(proxy.$refs["videoechart"]);
             vEcharts.setOption(pieOptions)
         }
 
