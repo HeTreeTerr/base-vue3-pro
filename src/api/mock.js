@@ -6,6 +6,7 @@ import userApi from './mockData/user.js'
 Mock
 .mock('/home/getTableData',homeApi.getTableData)
 .mock('/home/getCountData',homeApi.getCountData)
+.mock('/home/getChartData',homeApi.getChartData)
 
 //本地获取user的数据
 Mock.mock(/user\/getUser/,'get',userApi.getUserList)

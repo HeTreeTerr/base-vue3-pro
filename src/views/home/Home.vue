@@ -44,12 +44,27 @@
                     </div>
                 </el-card>
             </div>
+            <!-- 折线图表 -->
+            <el-card style="height: 280px;">
+                <div ref="echart" style="height: 280px;"></div>
+            </el-card>
+            <div class="graph">
+                <!-- 柱状图表 -->
+                <el-card style="height: 260px;">
+                    <div ref="userechart" style="height: 240px;"></div>
+                </el-card>
+                <!-- 饼形图表 -->
+                <el-card style="height: 260px;">
+                    <div ref="videoechart" style="height: 240px;"></div>
+                </el-card>
+            </div>
         </el-col>
     </el-row>
 </template>
 
 <script>
-import {defineComponent,getCurrentInstance,onMounted,ref} from "vue"
+import {defineComponent,getCurrentInstance,onMounted,reactive,ref} from "vue"
+import * as echarts from 'echarts'
 import axios from "axios"
 
 export default defineComponent({
@@ -93,7 +108,134 @@ export default defineComponent({
             getTableList();
             //获取count数据
             getCountList();
+            //获取echart数据
+            getChartData();
         });
+        //关于echarts 表格的渲染部分
+        let xOptions = reactive({
+            //图例文字颜色
+            textStyle:{
+                color: "#333"
+            },
+            grid:{
+                left: "20%"
+            },
+            //提示框
+            tooltip:{
+                trigger: "axis"
+            },
+            xAxis: {
+                type:"category", //类目轴
+                data: [],
+                axisLine:{
+                    lineStyle:{
+                        color: "#17b3a3"
+                    }
+                },
+                axisLabel:{
+                    interval: 0,
+                    color: "#333",
+                },
+            },
+            yAxis: [
+                {
+                    type: "value",
+                    axisLine:{
+                        lineStyle:{
+                            color: "#17b3a3"
+                        }
+                    },
+                }
+            ],
+            color: ["#2ec7e9", "#b6a2de", "#5ab1ef", "#ffb980", "#d87a80", "#8d98b3"],
+            series: []
+        });
+        let pieOptions = reactive({
+            tooltip:{
+                trigger:"item",
+            },
+            color:[
+                "#0f78f4",
+                "#dd536b",
+                "#9462e5",
+                "#a6a6a6",
+                "#e1bb22",
+                "#39c362",
+                "#3ed1cf",
+            ]
+
+        });
+
+        let orderData = reactive({
+            xData: [],
+            series: [],
+        });
+        let userData = reactive({
+            xData:[],
+            series:[]
+        });
+        let videoData = reactive({
+            series:[]
+        });
+
+        //获取数据
+        const getChartData = async ()=>{
+            let result = await proxy.$api.getChartData();
+            //console.log(result);
+            //得到接口数据
+            let orderRes = result.orderData;
+            let userRes = result.userData;
+            let videoRes = result.videoData;
+            
+            //orderData 折线图进行渲染
+            orderData.xData = orderRes.date;
+            const keyArray = Object.keys(orderRes.data[0]);
+            const series = [];
+            keyArray.forEach((key) => {
+                series.push({
+                    name: key,
+                    data: orderRes.data.map((item) => item[key]),
+                    type: "line",
+                });
+            });
+            orderData.series = series;
+            xOptions.xAxis.data = orderData.xData;
+            xOptions.series =  orderData.series;
+            
+            let hEcharts = echarts.init(proxy.$refs['echart']);
+            hEcharts.setOption(xOptions);
+            
+            //userData 柱状图进行渲染
+            userData.xData = userRes.map((item)=> item.date);
+            userData.series = [
+                {
+                    name: "新增用户",
+                    data: userRes.map((item)=> item.new),
+                    type: "bar",
+                },
+                {
+                    name: "活跃用户",
+                    data: userRes.map((item)=> item.active),
+                    type: "bar",
+                },
+            ];
+            xOptions.xAxis.data = userData.xData;
+            xOptions.series = userData.series;
+            let uEcharts = echarts.init(proxy.$refs["userechart"])
+            uEcharts.setOption(xOptions)
+
+            //videoData 饼状图
+            videoData.series=[
+                {
+                    data: videoRes,
+                    type: "pie"
+                },
+            ];
+            pieOptions.series = videoData.series
+            let vEcharts = echarts.init(proxy.$refs["videoechart"])
+            vEcharts.setOption(pieOptions)
+        }
+
         return{
             tableData,
             tableLabel,
@@ -162,4 +304,12 @@ export default defineComponent({
         color: #999;
     }
 }
+.graph{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .el-card{
+            width: 48%;
+        }
+    }
 </style>

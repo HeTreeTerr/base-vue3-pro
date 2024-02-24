@@ -21,7 +21,15 @@ export default{
             //mock: true
         })
     },
-
+    //home组件 右下侧统计获取
+    getChartData(params){
+        return request({
+            url: '/home/getChartData',
+            mothod: 'get',
+            data: params,
+            //mock: true
+        })
+    },
     //获取用户列表数据
     getUserData(params){
         return request({
