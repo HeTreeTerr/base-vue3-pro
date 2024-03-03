@@ -10,3 +10,4 @@ Mock
 
 //本地获取user的数据
 Mock.mock(/user\/getUser/,'get',userApi.getUserList)
+Mock.mock(/user\/add/,'post',userApi.createUser)

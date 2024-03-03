@@ -49,22 +49,22 @@
         width="35%"
         :before-close="handleClose"
     >
-        <el-form :inline="true" :model="formUser">
+        <el-form :inline="true" :model="formUser" ref="userForm">
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="姓名">
+                    <el-form-item label="姓名" prop="name">
                         <el-input v-model="formUser.name" placeholder="请输入姓名" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="年龄">
+                    <el-form-item label="年龄" prop="age">
                         <el-input v-model="formUser.age" placeholder="请输入年龄" />
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="性别">
+                    <el-form-item label="性别" prop="sex">
                         <el-select
                             v-model="formUser.sex"
                             placeholder="请选择"
@@ -76,7 +76,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="出生日期">
+                    <el-form-item label="出生日期" prop="birth">
                         <el-date-picker
                             v-model="formUser.birth"
                             type="date"
@@ -88,7 +88,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-form-item label="地址">
+                <el-form-item label="地址" prop="addr">
                     <el-input v-model="formUser.addr" placeholder="请输入地址" />
                 </el-form-item>
             </el-row>
@@ -192,6 +192,34 @@ export default defineComponent({
             birth: "", //出生日期
             addr: "", //地址
         });
+        //时间格式转换
+        const timeFormat = (time) => {
+            var time = new Date(time);
+            var year = time.getFullYear();
+            var month = time.getMonth() + 1;
+            var date = time.getDate();
+            function add(m){
+                return m < 10 ? "0"+m : m;
+            }
+            return year + "-" + add(month) + "-" + add(date);
+        };
+        //添加用户
+        const onSubmit = async () => {
+            //出生日期格式转换
+            formUser.birth = timeFormat(formUser.birth);
+            let res = await proxy.$api.addUser(formUser);
+            console.log(res);
+            if(res){
+                //@ts-ignore
+                ElMessage.success("添加成功");
+                //关闭模态框
+                dialogVisible.value = false;
+                //重置表单
+                proxy.$refs.userForm.resetFields();
+                //刷新页面
+                getUserData(config);
+            }
+        };
         return {
             list,
             tableLabel,
@@ -202,6 +230,7 @@ export default defineComponent({
             dialogVisible,
             handleClose,
             formUser,
+            onSubmit,
         }
     },
 })

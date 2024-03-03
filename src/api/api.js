@@ -7,7 +7,7 @@ export default{
     getTableDate(params){
         return request({
             url: '/home/getTableData',
-            mothod: 'get',
+            method: 'get',
             data: params,
             //mock: true
         })
@@ -16,7 +16,7 @@ export default{
     getCountData(params){
         return request({
             url: '/home/getCountData',
-            mothod: 'get',
+            method: 'get',
             data: params,
             //mock: true
         })
@@ -25,7 +25,7 @@ export default{
     getChartData(params){
         return request({
             url: '/home/getChartData',
-            mothod: 'get',
+            method: 'get',
             data: params,
             //mock: true
         })
@@ -34,7 +34,16 @@ export default{
     getUserData(params){
         return request({
             url: '/user/getUser',
-            mothod: 'get',
+            method: 'get',
+            data: params,
+            //mock: true
+        })
+    },
+    //创建用户
+    addUser(params){
+        return request({
+            url: '/user/add',
+            method: 'post',
             data: params,
             //mock: true
         })
