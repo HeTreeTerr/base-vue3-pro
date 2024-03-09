@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent,reactive } from 'vue';
 export default defineComponent({
     setup(){
         //登录的form数据
@@ -41,7 +41,8 @@ export default defineComponent({
         margin-bottom: 20px;
         color: #505450;
     }
-    /deep/.el-form-item__content{
+    
+    :deep(.el-form-item__content){
         justify-content: center;
     }
 }
