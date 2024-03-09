@@ -48,4 +48,13 @@ export default{
             //mock: true
         })
     },
+    //编辑用户
+    editUser(params){
+        return request({
+            url: '/user/edit',
+            method: 'post',
+            data: params,
+            //mock: true
+        })
+    }
 }

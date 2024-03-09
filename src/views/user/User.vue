@@ -220,19 +220,39 @@ export default defineComponent({
             proxy.$refs.userForm.validate(async (vaild) => {
                 //参数校验通过
                 if(vaild){
-                    //出生日期格式转换
-                    formUser.birth = timeFormat(formUser.birth);
-                    let res = await proxy.$api.addUser(formUser);
-                    console.log(res);
-                    if(res){
-                        //@ts-ignore
-                        ElMessage.success("添加成功");
-                        //关闭模态框
-                        dialogVisible.value = false;
-                        //重置表单
-                        proxy.$refs.userForm.resetFields();
-                        //刷新页面
-                        getUserData(config);
+                    //添加操作
+                    if(action.value == "add"){
+                        //出生日期格式转换
+                        formUser.birth = timeFormat(formUser.birth);
+                        let res = await proxy.$api.addUser(formUser);
+                        console.log(res);
+                        if(res){
+                            //@ts-ignore
+                            ElMessage.success("添加成功");
+                            //关闭模态框
+                            dialogVisible.value = false;
+                            //重置表单
+                            proxy.$refs.userForm.resetFields();
+                            //刷新页面
+                            getUserData(config);
+                        }
+                    }
+                    //编辑操作
+                    else{
+                        console.log(formUser);
+                        formUser.sex == "男" ? (formUser.sex=1) : (formUser.sex=0);
+                        let res = await proxy.$api.editUser(formUser);
+                        //console.log(res);
+                        if(res){
+                            //@ts-ignore
+                            ElMessage.success("编辑成功");
+                            //关闭模态框
+                            dialogVisible.value = false;
+                            //重置表单
+                            proxy.$refs.userForm.resetFields();
+                            //刷新页面
+                            getUserData(config);
+                        }
                     }
                 }else{
                     //@ts-ignore
