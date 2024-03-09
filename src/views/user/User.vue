@@ -77,8 +77,8 @@
                             placeholder="请选择"
                             clearable
                         >
-                            <el-option label="男" value="0" />
-                            <el-option label="女" value="1" />
+                            <el-option label="男" value="1" />
+                            <el-option label="女" value="0" />
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -240,7 +240,8 @@ export default defineComponent({
                     //编辑操作
                     else{
                         console.log(formUser);
-                        formUser.sex == "男" ? (formUser.sex=1) : (formUser.sex=0);
+                        //出生日期格式转换
+                        formUser.birth = timeFormat(formUser.birth);
                         let res = await proxy.$api.editUser(formUser);
                         //console.log(res);
                         if(res){
@@ -277,11 +278,13 @@ export default defineComponent({
         const handleEdit = (row) => {
             dialogVisible.value = true;
             action.value = 'edit';
-            console.log(row);
-            row.sex == 0 ? (row.sex='女') : (row.sex='男');
+            //sex值数字转字符串，解决select回显问题
+            row.sex = row.sex.toString();
+            //console.log(row);
             proxy.$nextTick(() => {
                 //浅拷贝
                 Object.assign(formUser,row);
+                formUser.birth = new Date(row.birth);
             });
         };
         //新增用户
