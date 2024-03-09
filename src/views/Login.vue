@@ -1,29 +1,68 @@
 <!-- 登录页面 -->
 <template>
-    <el-form :model="loginForm" class="login-container">
+    <el-form :model="formLogin" class="login-container" ref="loginForm">
         <h3>系统登录</h3>
-        <el-form-item>
-            <el-input type="input" placeholder="请输入账号"></el-input>
+        <el-form-item prop="username" 
+        :rules="[{required: true,message: '账号是必填项'}]"
+        >
+            <el-input type="input" placeholder="请输入账号" 
+            v-model="formLogin.username"
+            ></el-input>
+        </el-form-item>
+        <el-form-item prop="password" 
+        :rules="[{required: true,message: '密码是必填项'}]"
+        >
+            <el-input type="password" placeholder="请输入密码" 
+            v-model="formLogin.password"
+            ></el-input>
         </el-form-item>
         <el-form-item>
-            <el-input type="password" placeholder="请输入密码"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" size="large">登录</el-button>
+            <el-button type="primary" size="large" @click="login">登录</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
-import { defineComponent,reactive } from 'vue';
+import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
 export default defineComponent({
     setup(){
+        const { proxy } = getCurrentInstance();
         //登录的form数据
-        const loginForm = reactive({});
+        const formLogin = reactive({
+            username: '',
+            password: '',
+        });
+        const login = () => {
+            proxy.$refs.loginForm.validate(async (vaild) => {
+                //参数校验通过
+                if(vaild){
+                    try{
+                        const res = await proxy.$api.getMenu(formLogin);
+                        console.log(res);
+                        if(res){
+                            //@ts-ignore
+                            ElMessage.success("登录成功");
+                            //重置表单
+                            proxy.$refs.loginForm.resetFields();
+                        }
+                    }catch(error){
+                        //console.error(error);
+                    }
+                }else{
+                    //@ts-ignore
+                    ElMessage({
+                        showClose: true,
+                        message: '请输入正确的内容',
+                        type: 'error',
+                    });
+                }
+            });
+        };
         return{
-            loginForm,
+            formLogin,
+            login,
         }
-    }
+    },
 });
 </script>
 

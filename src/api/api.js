@@ -66,4 +66,13 @@ export default{
             //mock: true
         })
     },
+    //登录接口 根据用户名的不同，返回不同的菜单列表
+    getMenu(params){
+        return request({
+            url: '/permission/getMenu',
+            method: 'post',
+            data: params,
+            //mock: true
+        })
+    },
 }
