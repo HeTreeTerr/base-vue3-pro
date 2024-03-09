@@ -2,7 +2,7 @@
 <template>
     <div class="user-header">
         <!-- 新增按钮 -->
-        <el-button type="primary" @click="dialogVisible = true">+新增</el-button>
+        <el-button type="primary" @click="handleAdd()">+新增</el-button>
         <!-- 用户搜索 -->
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="请输入">
@@ -24,10 +24,8 @@
             />
             
             <el-table-column fixed="right" label="操作" width="180">
-            <template #default>
-                <el-button size="small"
-                >编辑</el-button
-                >
+            <template #default="scope">
+                <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
                 <el-button type="danger" size="small">删除</el-button>
             </template>
             </el-table-column>
@@ -42,10 +40,10 @@
             class="pager mt-4"
         />
     </div>
-    <!-- 模态框-用户新增 -->
+    <!-- 模态框-用户新增/编辑 -->
     <el-dialog
         v-model="dialogVisible"
-        title="新增用户"
+        :title="action == 'add' ? '新增用户' : '编辑用户'"
         width="35%"
         :before-close="handleClose"
     >
@@ -184,7 +182,6 @@ export default defineComponent({
             config.name = formInline.keyword;
             getUserData(config);
         };
-        //========添加用户===========
         //控制模态框的显示/隐藏
         const dialogVisible = ref(false);
         //模态框的关闭
@@ -218,7 +215,7 @@ export default defineComponent({
             }
             return year + "-" + add(month) + "-" + add(date);
         };
-        //添加用户
+        //表单提交，添加/编辑用户
         const onSubmit = () => {
             proxy.$refs.userForm.validate(async (vaild) => {
                 //参数校验通过
@@ -237,6 +234,13 @@ export default defineComponent({
                         //刷新页面
                         getUserData(config);
                     }
+                }else{
+                    //@ts-ignore
+                    ElMessage({
+                        showClose: true,
+                        message: '请输入正确的内容',
+                        type: 'error',
+                    });
                 }
             });
         };
@@ -246,6 +250,24 @@ export default defineComponent({
             dialogVisible.value = false;
             //字段样式恢复（字段校验等样式）
             proxy.$refs.userForm.resetFields();
+        };
+        //区分编辑和新增
+        const action = ref('add');
+        //编辑用户
+        const handleEdit = (row) => {
+            dialogVisible.value = true;
+            action.value = 'edit';
+            console.log(row);
+            row.sex == 0 ? (row.sex='女') : (row.sex='男');
+            proxy.$nextTick(() => {
+                //浅拷贝
+                Object.assign(formUser,row);
+            });
+        };
+        //新增用户
+        const handleAdd = () => {
+            dialogVisible.value = true;
+            action.value = 'add';
         };
         return {
             list,
@@ -259,6 +281,9 @@ export default defineComponent({
             formUser,
             onSubmit,
             handleCanel,
+            action,
+            handleEdit,
+            handleAdd,
         }
     },
 })
