@@ -92,13 +92,13 @@ export default {
         if (!id) {
             return {
                 code: -999,
-                message: '参数不正确'
+                msg: '参数不正确'
             }
         } else {
             List = List.filter(u => u.id !== id)
             return {
                 code: 200,
-                message: '删除成功'
+                msg: '删除成功'
             }
         }
     },

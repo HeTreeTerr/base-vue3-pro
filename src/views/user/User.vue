@@ -26,7 +26,9 @@
             <el-table-column fixed="right" label="操作" width="180">
             <template #default="scope">
                 <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                <el-button type="danger" size="small">删除</el-button>
+                <el-button type="danger" size="small" 
+                @click="handleDelete(scope.row)"
+                >删除</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -292,6 +294,22 @@ export default defineComponent({
             dialogVisible.value = true;
             action.value = 'add';
         };
+        //删除用户
+        const handleDelete = (row) => {
+            ElMessageBox.confirm('确定删除吗?')
+                .then(async () => {
+                    await proxy.$api.deleteUser({
+                        id: row.id,
+                    });
+                    //@ts-ignore
+                    ElMessage.success("删除成功");
+                    //刷新页面
+                    getUserData(config);
+                })
+                .catch(() => {
+                    // catch error
+                })
+        };
         return {
             list,
             tableLabel,
@@ -307,6 +325,7 @@ export default defineComponent({
             action,
             handleEdit,
             handleAdd,
+            handleDelete,
         }
     },
 })

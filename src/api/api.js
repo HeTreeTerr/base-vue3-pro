@@ -56,5 +56,14 @@ export default{
             data: params,
             //mock: true
         })
-    }
+    },
+    //删除用户
+    deleteUser(params){
+        return request({
+            url: '/user/delete',
+            method: 'get',
+            data: params,
+            //mock: true
+        })
+    },
 }
