@@ -42,8 +42,14 @@ import {useRouter} from 'vue-router'
 import { useStore } from 'vuex';
 export default {
     setup() {
+
+        //拿到路由对象
+        const router = useRouter();
+        //仓库/存储处
+        const store = useStore();
+
         //菜单数据
-        const list = [
+        /*const list = [
             {
                 path: "/user",
                 name: "user",
@@ -73,7 +79,9 @@ export default {
                     },
                 ]
             },
-        ];
+        ];*/
+
+        const asyncList = store.state.menu;
         
         //无子集（方法）
         /*const noChildren = ()=>{
@@ -87,13 +95,8 @@ export default {
 
         //菜单数据（方法）
         const menuListData = ()=>{
-            return list;
+            return asyncList;
         };
-        
-        //拿到路由对象
-        const router = useRouter();
-        //仓库/存储处
-        const store = useStore();
         
         //菜单跳转方法
         const clickMenu = (item)=>{

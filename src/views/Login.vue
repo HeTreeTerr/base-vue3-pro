@@ -24,9 +24,14 @@
 
 <script>
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 export default defineComponent({
     setup(){
         const { proxy } = getCurrentInstance();
+        const store = useStore();
+        const router = useRouter();
+
         //登录的form数据
         const formLogin = reactive({
             username: '',
@@ -44,6 +49,12 @@ export default defineComponent({
                             ElMessage.success("登录成功");
                             //重置表单
                             proxy.$refs.loginForm.resetFields();
+                            //存储菜单目录信息
+                            store.commit('setMenu',res.menu);
+                            //路由跳转到主页
+                            router.push({
+                                name: 'home',
+                            });
                         }
                     }catch(error){
                         //console.error(error);
