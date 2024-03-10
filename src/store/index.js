@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import Cookie from 'js-cookie'
 export default createStore({
     state: {
         isCollapse: true,
@@ -10,7 +11,8 @@ export default createStore({
                 label: '首页',
                 icon: 'home'
             }
-        ]
+        ],
+        token: '',
     },
     mutations: {
         updateIsCollapse(state,payload) {
@@ -68,5 +70,16 @@ export default createStore({
             state.menu = [];
             localStorage.removeItem('menu');
         },
+        setToken(state,val){
+            state.token = val;
+            Cookie.set('token',val);
+        },
+        cleanToken(state){
+            state.token = '';
+            Cookie.remove('token');
+        },
+        getToken(state){
+            state.token = state.token || Cookie.get('token');
+        }
     }
 })

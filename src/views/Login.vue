@@ -52,6 +52,7 @@ export default defineComponent({
                             //存储菜单目录信息
                             store.commit('setMenu',res.menu);
                             store.commit('addMenu',router);
+                            store.commit('setToken',res.token);
                             //路由跳转到主页
                             router.push({
                                 name: 'home',
