@@ -51,13 +51,14 @@ export default defineComponent({
                             proxy.$refs.loginForm.resetFields();
                             //存储菜单目录信息
                             store.commit('setMenu',res.menu);
+                            store.commit('addMenu',router);
                             //路由跳转到主页
                             router.push({
                                 name: 'home',
                             });
                         }
                     }catch(error){
-                        //console.error(error);
+                        console.error(error);
                     }
                 }else{
                     //@ts-ignore

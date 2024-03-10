@@ -17,11 +17,12 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   }
 
 app.config.globalProperties.$api = api
+store.commit('addMenu',router)
 //链式写法
-//app.use(router).use(store)
+app.use(router).use(store)
 //等价写法
-app.use(router)
-app.use(store)
+/*app.use(router)
+app.use(store)*/
 app.mount('#app')
 
 /*

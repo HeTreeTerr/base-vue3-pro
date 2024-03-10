@@ -9,25 +9,25 @@ export default {
                 data:{
                     menu:[
                         {
-                            path: "/",
+                            path: "/home",
                             name: "home",
                             label: "首页",
                             icon: "house",
-                            url: "Home/Home",
+                            url: "home/Home",
                         },
                         {
                             path: "/mall",
                             name: "mall",
                             label: "商品管理",
                             icon: "video-play",
-                            url: "MallManage/MallManage",
+                            url: "mall/Mall",
                         },
                         {
                             path: "/user",
                             name: "user",
                             label: "用户管理",
                             icon: "user",
-                            url: "UserManage/UserManage",
+                            url: "user/User",
                         },
                         {
                             label: "其他",
@@ -38,14 +38,14 @@ export default {
                                     name: "page1",
                                     label: "页面1",
                                     icon: "setting",
-                                    url: "Other/PageOne",
+                                    url: "page/Page1",
                                 },
                                 {
                                     path: "/page2",
                                     name: "page2",
                                     label: "页面2",
                                     icon: "setting",
-                                    url: "Other/PageTwo",
+                                    url: "page/Page2",
                                 },
                             ],
                         },
@@ -60,18 +60,18 @@ export default {
                 data:{
                     menu:[
                         {
-                            path: "/",
+                            path: "/home",
                             name: "home",
                             label: "首页",
                             icon: "house",
-                            url: "Home/Home",
+                            url: "home/Home",
                         },
                         {
                             path: "/mall",
                             name: "mall",
                             label: "商品管理",
                             icon: "video-play",
-                            url: "MallManage/MallManage",
+                            url: "mall/Mall",
                         },
                     ],
                     token:Mock.Random.guid(),

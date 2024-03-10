@@ -1,10 +1,11 @@
 <script setup>
-import { RouterView } from 'vue-router';
+/*import { RouterView, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const router = useRouter();
 //从localStorage中持久化菜单目录到vuex中
-store.commit('addMenu');
+store.commit('addMenu',router);*/
 </script>
 
 <!-- 项目初始化生成内容注掉 -->

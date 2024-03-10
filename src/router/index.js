@@ -6,8 +6,10 @@ const routes = [
     {
         path: '/',
         component:()=>import('../views/Main.vue'),
+        name: 'home1',
         redirect: 'home',
-        children:[
+        children: [],
+        /*children:[
             {
                 path: '/home',
                 name: 'home',
@@ -28,7 +30,7 @@ const routes = [
                 name: 'page2',
                 component:()=>import('../views/page/Page2.vue')
             }
-        ]
+        ]*/
     },
     {
         path: '/login',
