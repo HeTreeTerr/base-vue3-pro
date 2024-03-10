@@ -36,7 +36,7 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click="handleLoginOut">退出</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -46,10 +46,12 @@
 
 <script>
 import { computed,defineComponent } from 'vue-demi'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default defineComponent ({
   setup() {
     let store = useStore();
+    const router = useRouter();
     //获取图片地址
     const getImgSrc = (user)=>{
       //console.log(user);
@@ -68,11 +70,18 @@ export default defineComponent ({
       //debugger
       return store.state.currentMenu;
     });
-
+    //退出
+    const handleLoginOut = () => {
+      store.commit('cleanMenu');
+      router.push({
+        name: 'login',
+      });
+    };
     return {
       getImgSrc,
       handleCollapse,
       current,
+      handleLoginOut,
     };
   }
 })
