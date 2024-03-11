@@ -47,17 +47,20 @@ export default createStore({
             state.menu = menu;
 
             const menuArray = [];
+
+            const importRoute = import.meta.glob('../views/**/*.vue');
             menu.forEach(item => {
                 if(item.children){
                     item.children = item.children.map(item => {
                         let url = `../views/${item.url}.vue`;
-                        item.component = () => import(/* @vite-ignore */ url);
+                        item.component = importRoute[url];
                         return item;
                     });
                     menuArray.push(...item.children);
                 }else{
                     let url = `../views/${item.url}.vue`;
-                    item.component = () => import(/* @vite-ignore */ url);
+                    item.component = importRoute[url];
+
                     menuArray.push(item);
                 }
             });
